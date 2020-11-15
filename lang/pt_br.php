@@ -1,4 +1,5 @@
 ﻿<?php
+// Original pt-br translation courtesy of Megasantos
 return array(	
 	// Generic/Misc.
 	'YesLabel'                => 'Sim',
@@ -78,7 +79,7 @@ return array(
 	'OldPasswordInvalid'      => "A senha que você digitou não bate com a sua senha real.",
 	'ConfirmNewPassword'      => 'Confirme sua nova senha.',
 	'NewPasswordHasUsername'  => 'Sua nova senha não deve conter seu nome de usuário..',
-	'NewPasswordInvalid'      => 'Senha alterada com sucesso, favor faça login novamente.',
+	'NewPasswordInvalid'      => 'Sua nova senha contém caracteres inválidos.',
 	'NewPasswordSameAsOld'    => 'Nova senha não pode ser a mesma que sua senha atual.',
 	'NewPasswordNeedUpper'    => 'Sua nova senha deve conter pelo menos %d letra(s) maiúsculas.',
 	'NewPasswordNeedLower'    => 'Sua nova senha deve conter pelo menos %d letra(s) minúsculas.',
@@ -596,6 +597,8 @@ return array(
 	'ServerStatusCharLabel'   => 'Character Server',
 	'ServerStatusMapLabel'    => 'Map Server',
 	'ServerStatusOnlineLabel' => 'Jogadores Online',
+	'ServerStatusATMerchantsLabel' => 'Comerciantes Autotrade',
+	'ServerStatusPopulationLabel' => 'População',
 	
 	// Module: service
 	// - service/tos
@@ -622,8 +625,8 @@ return array(
 
 	// Security
 	'SecuritySessionInvalid'  => 'Desculpe, a sessão expirou, tente novamente.',
-	'SecurityNeedSession'     => 'Desculpe, nenhuma sessão forma encontrada (tentativa Hack?)',
-	'SecurityNeedToken'       => 'Desculpe, nenhum sinal encontrado para identificar ação (tentativa Hack ?)',
+	'SecurityNeedSession'     => 'Desculpe, nenhuma sessão encontrada (tentativa Hack?)',
+	'SecurityNeedToken'       => 'Desculpe, nenhum sinal encontrado para identificar há ação (tentativa Hack ?)',
 
 );
 ?>

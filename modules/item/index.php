@@ -8,11 +8,7 @@ $title = 'List Items';
 require_once 'Flux/TemporaryTable.php';
 
 try {
-	if($server->isRenewal) {
-		$fromTables = array("{$server->charMapDatabase}.item_db_re", "{$server->charMapDatabase}.item_db2");
-	} else {
-		$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
-	}
+	$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
 	$tableName = "{$server->charMapDatabase}.items";
 	$tempTable = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
 	$shopTable = Flux::config('FluxTables.ItemShopTable');
@@ -41,10 +37,8 @@ try {
 		$weightOp     = $params->get('weight_op');
 		$atk          = $params->get('atk');
 		$atkOp        = $params->get('atk_op');
-		if ($server->isRenewal) {
-			$matk         = $params->get('matk');
-			$matkOp       = $params->get('matk_op');
-		}
+		$matk         = $params->get('matk');
+		$matkOp       = $params->get('matk_op');
 		$defense      = $params->get('defense');
 		$defenseOp    = $params->get('defense_op');
 		$range        = $params->get('range');
@@ -78,10 +72,10 @@ try {
 				if (count($itemTypeSplit) == 2 && is_numeric($itemType2) && (floatval($itemType2) == intval($itemType2))) {
 					$itemTypes2 = Flux::config('ItemTypes2')->toArray();
 					if (array_key_exists($itemType, $itemTypes2) && array_key_exists($itemType2, $itemTypes2[$itemType]) && $itemTypes2[$itemType][$itemType2]) {
-						$sqlpartial .= "AND view = ? ";
+						$sqlpartial .= "AND view_sprite = ? ";
 						$bind[]      = $itemType2;
 					} else {
-						$sqlpartial .= 'AND view IS NULL ';
+						$sqlpartial .= 'AND view_sprite IS NULL ';
 					}
 				}
 			} else {
@@ -185,7 +179,7 @@ try {
 			}
 		}
 		
-		if ($server->isRenewal && in_array($matkOp, $opValues) && trim($matk) != '') {
+		if (in_array($matkOp, $opValues) && trim($matk) != '') {
 			$op = $opMapping[$matkOp];
 			if ($op == '=' && $matk === '0') {
 				$sqlpartial .= "AND (matk IS NULL OR matk = 0) ";
@@ -264,17 +258,14 @@ try {
 	$paginator = $this->getPaginator($sth->fetch()->total);
 	$sortable = array(
 		'item_id' => 'asc', 'name', 'type', 'equip_locations', 'price_buy', 'price_sell', 'weight',
-		'atk', 'defense', 'range', 'slots', 'refineable', 'cost', 'origin_table'
+		'atk', 'matk', 'defense', 'range', 'slots', 'refineable', 'cost', 'origin_table'
 	);
-	if($server->isRenewal) {
-		$sortable[] = 'matk';
-	}
 	$paginator->setSortableColumns($sortable);
 	
 	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, ";
 	$col .= "IFNULL(equip_locations, 0) AS equip_locations, price_buy, weight/10 AS weight, ";
 	$col .= "defence AS defense, `range`, slots, refineable, cost, $shopTable.id AS shop_item_id, ";
-	$col .= "IFNULL(price_sell, FLOOR(price_buy/2)) AS price_sell, view, atk, matk";
+	$col .= "IFNULL(price_sell, FLOOR(price_buy/2)) AS price_sell, view_sprite as view, atk, matk";
 	
 	$sql  = $paginator->getSQL("SELECT $col FROM $tableName $sqlpartial GROUP BY items.id");
 	$sth  = $server->connection->getStatement($sql);

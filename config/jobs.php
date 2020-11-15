@@ -146,6 +146,7 @@ return array(
 	4211 => 'Kagerou',
 	4212 => 'Oboro',
 	
-	4215 => 'Rebellion'
+	4215 => 'Rebellion',
+	4218 => 'Summoner'
 )
 ?>
